@@ -240,3 +240,76 @@ root.render(
   </React.StrictMode>
 );
 ```
+
+## Tailwindcssの導入
+
+参考 https://zenn.dev/kazuma_r5/articles/e6ca05ad2a30dd
+
+```bash
+$ npm install --save-dev tailwindcss
+$ npx tailwindcss init
+```
+
+```json
+# taildinw.config.jsを修正
+content: [],
+↓
+content: ["./src/**/*.tsx"],
+```
+
+### src/index.css
+
+```css
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+```
+
+## 関連プラグインのインストール
+
+```bash
+$ npm install --save-dev mini-css-extract-plugin css-loader postcss postcss-loader
+※ css-minimizer-webpack-pluginとautoprefixerは外した
+```
+
+## webpackの設定
+
+```js
+# webpack.config.js
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+
+plugins: [
+	...
+	new MiniCssExtractPlugin({
+		filename: "./css/index.css",
+	}),
+]
+
+rules: [
+	...
+	{
+		test: /\.css$/i,
+		use: [
+			MiniCssExtractPlugin.loader,
+			"css-loader",
+			"postcss-loader"
+		],
+	},
+]
+```
+
+## postcss.config.js
+
+```js
+module.exports = {
+	plugins: {
+		tailwindcss: {},
+	},
+};
+```
+
+## index.ts
+
+```ts
+import './index.css';
+```

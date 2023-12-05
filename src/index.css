@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+	background-color: rgba(0,0,0,0.5);
+}
+
+.container {
+	background-color: white;
+	padding: 30px;
+	margin: 0 auto;
+}
